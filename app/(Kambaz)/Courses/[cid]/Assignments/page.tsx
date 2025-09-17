@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Assignments() {
   return (
     <div id="wd-assignments">
@@ -9,12 +10,12 @@ export default function Assignments() {
       </h3>
       <ul id="wd-assignment-list">
         <li className="wd-assignment-list-item">
-          <a
+          <Link
             href="/Courses/1234/Assignments/123"
             className="wd-assignment-link"
           >
             A1 - ENV + HTML
-          </a>
+          </Link>
           <p>
             Multiple Modules | <strong>Not available until</strong> May 6 at
             12:00am |
@@ -24,12 +25,12 @@ export default function Assignments() {
           </p>
         </li>
         <li className="wd-assignment-list-item">
-          <a
+          <Link
             href="/Courses/1234/Assignments/234"
             className="wd-assignment-link"
           >
             A2 - CSS + BOOTSTRAP
-          </a>
+          </Link>
           <p>
             Multiple Modules | <strong>Not available until</strong> May 13 at
             12:00am |
@@ -39,12 +40,12 @@ export default function Assignments() {
           </p>
         </li>
         <li className="wd-assignment-list-item">
-          <a
+          <Link
             href="/Courses/1234/Assignments/345"
             className="wd-assignment-link"
           >
             A3 - JAVASCRIPT + REACT
-          </a>
+          </Link>
           <p>
             Multiple Modules | <strong>Not available until</strong> May 20 at
             12:00am |
