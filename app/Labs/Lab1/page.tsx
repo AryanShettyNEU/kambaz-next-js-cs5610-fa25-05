@@ -321,6 +321,12 @@ export default function Lab1() {
       </a>
       to get dummy text
       <br />
+      <a
+        href="https://github.com/AryanShettyNEU/kambaz-next-js-cs5610-fa25-05"
+        id="wd-github"
+      >
+        My Github Repository
+      </a>
     </div>
   );
 }
