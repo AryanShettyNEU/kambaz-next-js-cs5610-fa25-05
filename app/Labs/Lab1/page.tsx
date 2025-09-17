@@ -1,7 +1,19 @@
 "use client";
+import Link from "next/link";
 export default function Lab1() {
   return (
     <div id="wd-lab1">
+      <h1>Name - Aryan Navin Shetty</h1>
+      <h2>Section: 05 | CRN: 19730 </h2>
+      <h3>
+        Source Code:&nbsp;
+        <Link
+          href="https://github.com/AryanShettyNEU/kambaz-next-js-cs5610-fa25-05"
+          id="wd-lab3-link"
+        >
+          Github
+        </Link>
+      </h3>
       <h2>Lab 1</h2>
       <h3>HTML Examples</h3>
       <div id="wd-h-tag">

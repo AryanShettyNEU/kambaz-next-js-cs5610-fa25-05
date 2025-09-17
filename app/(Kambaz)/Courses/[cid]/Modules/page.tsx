@@ -51,10 +51,83 @@ export default function Modules() {
             </li>
           </ul>
         </li>
+
         <li className="wd-module">
           <div className="wd-title">
             Week 1, Lecture 2 - Formatting User Interfaces with HTML
           </div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">LEARNING OBJECTIVES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Understand HTML syntax</li>
+                <li className="wd-content-item">
+                  Format text with headings and paragraphs
+                </li>
+                <li className="wd-content-item">
+                  Create lists, links, and images
+                </li>
+              </ul>
+            </li>
+            <li className="wd-lesson">
+              <span className="wd-title">READING</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">
+                  Full Stack Developer - Chapter 4 - HTML Basics
+                </li>
+                <li className="wd-content-item">
+                  MDN Documentation - HTML Elements
+                </li>
+              </ul>
+            </li>
+            <li className="wd-lesson">
+              <span className="wd-title">SLIDES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Introduction to HTML</li>
+                <li className="wd-content-item">Structuring Web Pages</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li className="wd-module">
+          <div className="wd-title">
+            Week 2, Lecture 3 - Styling Web Pages with CSS
+          </div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">LEARNING OBJECTIVES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Understand the role of CSS</li>
+                <li className="wd-content-item">Apply styles with selectors</li>
+                <li className="wd-content-item">
+                  Use colors, fonts, and backgrounds
+                </li>
+                <li className="wd-content-item">
+                  Organize styles with classes and IDs
+                </li>
+              </ul>
+            </li>
+            <li className="wd-lesson">
+              <span className="wd-title">READING</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">
+                  Full Stack Developer - Chapter 5 - CSS Basics
+                </li>
+                <li className="wd-content-item">
+                  MDN Documentation - CSS Selectors
+                </li>
+              </ul>
+            </li>
+            <li className="wd-lesson">
+              <span className="wd-title">SLIDES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Introduction to CSS</li>
+                <li className="wd-content-item">Selectors and Properties</li>
+                <li className="wd-content-item">Box Model and Layout Basics</li>
+              </ul>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

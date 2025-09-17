@@ -23,7 +23,7 @@ export default function AssignmentEditor() {
               <label htmlFor="wd-points">Points</label>
             </td>
             <td>
-              <input id="wd-points" defaultValue={100} />
+              <input id="wd-points" type="number" defaultValue={100} />
             </td>
           </tr>
           <tr>
@@ -45,7 +45,7 @@ export default function AssignmentEditor() {
               <select id="wd-display-grade-as">
                 <option value="PERCENTAGE">Percentage</option>
                 <option value="LETTER_GRADE">Letter Grade</option>
-                <option value="LETTER_GRADE">Letter Grade</option>
+                <option value="ABSOLUTE">Absolute</option>
               </select>
             </td>
           </tr>
