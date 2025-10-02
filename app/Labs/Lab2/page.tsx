@@ -64,7 +64,7 @@ export default function Lab2() {
               <br />
               meaning the descendant of some ancestor.
               <br />
-              <span className="wd-selector-4">
+            <span className="wd-selector-4">
                 Whereas this span is a direct child of its parent
               </span>
               <br />
