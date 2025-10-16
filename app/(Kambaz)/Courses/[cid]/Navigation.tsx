@@ -20,6 +20,7 @@ export default function CourseNavigation({ courseId }: { courseId: string }) {
       {links.map((link) => (
         <Link
           href={`/Courses/${courseId}/${link}`}
+          key={link}
           id={`wd-course-${link.toLowerCase()}-link`}
           className={`list-group-item ${
             pathname.includes(link) ? "active" : "text-danger"
