@@ -27,6 +27,9 @@ import Square from "./Square";
 import Highlight from "./Highlight";
 import PathParameters from "./PathParameters";
 import TodoList from "./todos/TodoList";
+import ConditionalOutputIfElse from "./ConditionalOutputIfElse";
+import ConditionalOutputInline from "./ConditionalOutputInline";
+import Styles from "./Styles";
 
 export default function Lab3() {
   console.log("Hello World!");
@@ -39,6 +42,8 @@ export default function Lab3() {
       <BooleanVariables />
       <IfElse />
       <TernaryOperator />
+      <ConditionalOutputIfElse />
+      <ConditionalOutputInline />
       <LegacyFunctions />
       <ArrowFunctions />
       <ImpliedReturn />
@@ -58,6 +63,7 @@ export default function Lab3() {
       <FunctionDestructing />
       <DestructingImports />
       <Classes />
+      <Styles />
       <Add a={3} b={4} />
       <h4>Square of 4</h4>
       <Square>4</Square>
