@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import {
   Button,
   Form,
@@ -7,16 +6,21 @@ import {
   ListGroup,
   ListGroupItem,
 } from "react-bootstrap";
-import { BsGripVertical, BsPlus, BsPlusLg } from "react-icons/bs";
-import ModuleControlButtons from "../Modules/ModuleControlButtons";
+import { BsGripVertical, BsPlusLg } from "react-icons/bs";
 import AssignmentControlButtons from "./AssignmentControls";
 import { FaSearch } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa6";
 import AssignmentItem from "./AssignmentItem";
+import { assignments } from "@/app/(Kambaz)/Database";
 
 import "./index.css";
+import { useParams } from "next/navigation";
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const currentAssignments = assignments.filter(
+    (assignment) => assignment.course === cid
+  );
   return (
     <div id="wd-assignments">
       <div className="d-flex flex-row justify-content-between mb-4">
@@ -72,27 +76,9 @@ export default function Assignments() {
             </span>
             <AssignmentControlButtons />
           </div>
-          <AssignmentItem
-            title="A1"
-            modules="Multiple Modules"
-            availableDate="May 6 at 12:00am"
-            dueDate="May 13 at 11:59pm"
-            points={100}
-          />
-          <AssignmentItem
-            title="A2"
-            modules="Multiple Modules"
-            availableDate="May 13 at 12:00am"
-            dueDate="May 20 at 11:59pm"
-            points={100}
-          />
-          <AssignmentItem
-            title="A1"
-            modules="Multiple Modules"
-            availableDate="May 20 at 12:00am"
-            dueDate="May 27 at 11:59pm"
-            points={100}
-          />
+          {currentAssignments.map(({ _id, course, ...rest }) => (
+            <AssignmentItem key={_id} aid={_id} cid={course} {...rest} />
+          ))}
         </ListGroupItem>
       </ListGroup>
       \

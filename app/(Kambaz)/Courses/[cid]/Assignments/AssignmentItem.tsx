@@ -10,6 +10,8 @@ interface AssignmentListItemProps {
   availableDate: string;
   dueDate: string;
   points: string | number;
+  aid: string;
+  cid: string;
 }
 
 const AssignmentListItem: React.FC<AssignmentListItemProps> = ({
@@ -18,18 +20,22 @@ const AssignmentListItem: React.FC<AssignmentListItemProps> = ({
   availableDate,
   dueDate,
   points,
+  aid,
+  cid,
 }) => {
   return (
     <ListGroupItem className="wd-assignment p-3 ps-1 d-flex align-items-center">
       <div className="d-flex flex-row">
         <BsGripVertical className="me-3 fs-3 text-secondary" />
-        <BsPencilSquare className="me-3 mt-1 fs-5 text-success" />
+        <Link href={`/Courses/${cid}/Assignments/${aid}`}>
+          <BsPencilSquare className="me-3 mt-1 fs-5 text-success" />
+        </Link>
       </div>
 
       <div className="flex-grow-1 d-flex align-items-start">
         <div>
           <Link
-            href="/Courses/1234/Assignments/2345"
+            href={`/Courses/${cid}/Assignments/${aid}`}
             className="text-decoration-none text-dark"
           >
             <h5 className="mb-1 fw-bold">{title}</h5>
@@ -38,9 +44,9 @@ const AssignmentListItem: React.FC<AssignmentListItemProps> = ({
           <p className="mb-0 text-muted small">
             <span className="text-danger">{modules}</span> |&nbsp;
             <span className="fw-bold">Not available until </span>
-            {availableDate} |&nbsp;
+            {new Date(availableDate).toLocaleString()} |&nbsp;
             <span className="fw-bold">Due </span>
-            {dueDate} | {points} pts
+            {new Date(dueDate).toLocaleString()} | {points} pts
           </p>
         </div>
       </div>
