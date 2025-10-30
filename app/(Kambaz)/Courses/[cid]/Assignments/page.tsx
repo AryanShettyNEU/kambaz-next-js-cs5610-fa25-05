@@ -11,16 +11,30 @@ import AssignmentControlButtons from "./AssignmentControls";
 import { FaSearch } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa6";
 import AssignmentItem from "./AssignmentItem";
-import { assignments } from "@/app/(Kambaz)/Database";
+// import { assignments } from "@/app/(Kambaz)/Database";
+import { useSelector, useDispatch } from "react-redux";
 
 import "./index.css";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
+import { IAssignment } from "@/app/(Kambaz)/Database/types";
+import { deleteAssignment } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const currentAssignments = assignments.filter(
-    (assignment) => assignment.course === cid
+
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const currentAssignments: IAssignment[] = assignments.filter(
+    (assignment: IAssignment) => assignment.course === cid
   );
+  const dispatch = useDispatch();
+
+  const onDeleteAssignment = (id: string) => {
+    dispatch(deleteAssignment(id));
+  };
+
+  const onUpdateAssignment = (id: string) => {
+    redirect(`./Assignments/${id}`);
+  };
   return (
     <div id="wd-assignments">
       <div className="d-flex flex-row justify-content-between mb-4">
@@ -59,7 +73,9 @@ export default function Assignments() {
             size="lg"
             className="me-1 rounded-2"
             id="wd-add-assignment"
-            href="/Courses/1234/Assignments/New"
+            onClick={() => {
+              redirect("./Assignments/New");
+            }}
           >
             <BsPlusLg />
             <span className="fw-bold">Assignment</span>
@@ -77,11 +93,17 @@ export default function Assignments() {
             <AssignmentControlButtons />
           </div>
           {currentAssignments.map(({ _id, course, ...rest }) => (
-            <AssignmentItem key={_id} aid={_id} cid={course} {...rest} />
+            <AssignmentItem
+              key={_id}
+              aid={_id}
+              cid={course}
+              {...rest}
+              onDeleteAssignment={onDeleteAssignment}
+              onUpdateAssignment={onUpdateAssignment}
+            />
           ))}
         </ListGroupItem>
       </ListGroup>
-      \
     </div>
   );
 }

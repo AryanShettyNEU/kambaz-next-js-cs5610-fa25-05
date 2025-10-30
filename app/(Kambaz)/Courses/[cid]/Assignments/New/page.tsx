@@ -1,158 +1,48 @@
-import {
-  Button,
-  FormCheck,
-  FormControl,
-  FormLabel,
-  FormSelect,
-  Row,
-  Col,
-} from "react-bootstrap";
+"use client";
+import { IAssignmentData } from "@/app/(Kambaz)/Database/types";
+import { redirect, useParams } from "next/navigation";
+import React, { SyntheticEvent, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addAssignment } from "../reducer";
+import AssignmentEditor from "../AssignmentsEditor";
 
-export default function AssignmentEditor() {
+const New = () => {
+  const dispatch = useDispatch();
+  const { cid } = useParams();
+
+  const [assignment, setAssignment] = useState<IAssignmentData>(() => {
+    const today = new Date();
+    const oneWeekLater = new Date();
+    oneWeekLater.setDate(today.getDate() + 7);
+    return {
+      title: "New Assignment",
+      description: "",
+      points: 100,
+      course: cid as string,
+      availableDate: today.toISOString().slice(0, 10),
+      dueDate: oneWeekLater.toISOString().slice(0, 10),
+      untilDate: oneWeekLater.toISOString().slice(0, 10),
+    };
+  });
+
+  const redirectBack = (e: SyntheticEvent) => {
+    e.preventDefault();
+    redirect("../Assignments");
+  };
+
+  const onSave = (e: SyntheticEvent) => {
+    dispatch(addAssignment(assignment));
+    redirectBack(e);
+  };
+
   return (
-    <div id="wd-assignments-editor">
-      <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
-      <FormControl id="wd-name" placeholder="Assignment" />
-
-      <FormControl
-        className="mt-4"
-        as="textarea"
-        id="wd-description"
-        rows={12}
-        cols={42}
-      />
-
-      <Row className="my-3">
-        <Col sm={3} className="text-end">
-          <FormLabel htmlFor="wd-points">Points</FormLabel>
-        </Col>
-        <Col sm={6}>
-          <FormControl id="wd-points" type="number" />
-        </Col>
-      </Row>
-
-      <Row className="mb-3">
-        <Col sm={3} className="text-end">
-          <FormLabel htmlFor="wd-group">Assignment Group</FormLabel>
-        </Col>
-        <Col sm={6}>
-          <FormSelect id="wd-group">
-            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-            <option value="QUIZ">QUIZ</option>
-          </FormSelect>
-        </Col>
-      </Row>
-
-      <Row className="mb-3">
-        <Col sm={3} className="text-end">
-          <FormLabel htmlFor="wd-display-grade-as">Display Grade as</FormLabel>
-        </Col>
-        <Col sm={6}>
-          <FormSelect id="wd-display-grade-as">
-            <option value="PERCENTAGE">Percentage</option>
-            <option value="LETTER_GRADE">Letter Grade</option>
-            <option value="ABSOLUTE">Absolute</option>
-          </FormSelect>
-        </Col>
-      </Row>
-
-      <Row className="mb-3">
-        <Col sm={3} className="text-end">
-          <FormLabel htmlFor="wd-submission-type">Submission Type</FormLabel>
-        </Col>
-        <Col sm={6}>
-          <div className="border p-3 rounded">
-            <FormSelect id="wd-submission-type">
-              <option value="ONLINE">Online</option>
-              <option value="OFFLINE">Offline</option>
-            </FormSelect>
-            <br />
-            <p className="fw-bold">Online Entry Options</p>
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex flex-row">
-                <FormCheck type="checkbox" id="wd-text-entry" />
-                <FormLabel htmlFor="wd-text-entry" className="ms-2">
-                  Text Entry
-                </FormLabel>
-              </div>
-              <div className="d-flex flex-row">
-                <FormCheck type="checkbox" id="wd-website-url" />
-                <FormLabel htmlFor="wd-website-url" className="ms-2">
-                  Website URL
-                </FormLabel>
-              </div>
-              <div className="d-flex flex-row">
-                <FormCheck type="checkbox" id="wd-media-recordings" />
-                <FormLabel htmlFor="wd-media-recordings" className="ms-2">
-                  Media Recordings
-                </FormLabel>
-              </div>
-              <div className="d-flex flex-row">
-                <FormCheck type="checkbox" id="wd-student-annotation" />
-                <FormLabel htmlFor="wd-student-annotation" className="ms-2">
-                  Student Annotation
-                </FormLabel>
-              </div>
-              <div className="d-flex flex-row">
-                <FormCheck type="checkbox" id="wd-file-upload" />
-                <FormLabel htmlFor="wd-file-upload" className="ms-2">
-                  File Uploads
-                </FormLabel>
-              </div>
-            </div>
-          </div>
-        </Col>
-      </Row>
-
-      <Row className="mb-3">
-        <Col sm={3} className="text-end">
-          <p>Assign</p>
-        </Col>
-        <Col sm={6}>
-          <div className="border p-3 rounded">
-            <div>
-              <FormLabel htmlFor="wd-assign-to" className="fw-bold">
-                Assign to
-              </FormLabel>
-              <br />
-              <FormControl type="text" id="wd-assign-to" />
-            </div>
-            <br />
-            <div>
-              <FormLabel htmlFor="wd-due-date" className="fw-bold">
-                Due
-              </FormLabel>
-              <br />
-              <FormControl type="date" id="wd-due-date" />
-            </div>
-            <br />
-            <Row>
-              <Col>
-                <FormLabel htmlFor="wd-available-from" className="fw-bold">
-                  Available from
-                </FormLabel>
-                <FormControl type="date" id="wd-available-from" />
-              </Col>
-              <Col>
-                <FormLabel htmlFor="wd-available-until" className="fw-bold">
-                  Until
-                </FormLabel>
-                <FormControl type="date" id="wd-available-until" />
-              </Col>
-            </Row>
-          </div>
-        </Col>
-      </Row>
-
-      <hr />
-      <div className="d-flex justify-content-end">
-        <Button variant="secondary" className="me-1" id="wd-assignment-cancel">
-          Cancel
-        </Button>
-        <Button variant="danger" id="wd-assignment-save">
-          Save
-        </Button>
-      </div>
-    </div>
+    <AssignmentEditor
+      assignment={assignment}
+      setAssignment={setAssignment}
+      onClose={redirectBack}
+      onSave={onSave}
+    />
   );
-}
+};
+
+export default New;

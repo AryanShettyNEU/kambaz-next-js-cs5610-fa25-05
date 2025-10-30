@@ -1,69 +1,114 @@
-import Link from "next/link";
+"use client";
+import { redirect } from "next/dist/client/components/navigation";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentUser } from "../reducer";
 import { Button, FormControl, FormLabel, FormSelect } from "react-bootstrap";
 export default function Profile() {
+  const [profile, setProfile] = useState<any>({});
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const fetchProfile = () => {
+    if (!currentUser) return redirect("/Account/Signin");
+    setProfile(currentUser);
+  };
+  const signout = () => {
+    dispatch(setCurrentUser(null));
+    redirect("/Account/Signin");
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <div id="wd-profile-screen" style={{ maxWidth: 300 }}>
       <h3>Profile</h3>
-      <FormLabel htmlFor="wd-profile-username">Username</FormLabel>
-      <FormControl
-        id="wd-profile-username"
-        defaultValue="alice"
-        placeholder="username"
-        className="wd-username"
-      />
-      <FormLabel className="mt-2" htmlFor="wd-profile-password">
-        Password
-      </FormLabel>
-      <FormControl
-        id="wd-profile-password"
-        defaultValue="123"
-        placeholder="password"
-        type="password"
-        className="wd-password"
-      />
+      <div>
+        <FormLabel htmlFor="wd-profile-username">Username</FormLabel>
+        <FormControl
+          id="wd-profile-username"
+          defaultValue={profile.username}
+          onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+          placeholder="username"
+          className="wd-username"
+        />
+        <FormLabel className="mt-2" htmlFor="wd-profile-password">
+          Password
+        </FormLabel>
+        <FormControl
+          id="wd-profile-password"
+          defaultValue={profile.password}
+          onChange={(e) => setProfile({ ...profile, password: e.target.value })}
+          placeholder="password"
+          type="password"
+          className="wd-password"
+        />
 
-      <FormLabel className="mt-2" htmlFor="wd-firstname">
-        First Name
-      </FormLabel>
-      <FormControl
-        defaultValue="Alice"
-        placeholder="First Name"
-        id="wd-firstname"
-      />
+        <FormLabel className="mt-2" htmlFor="wd-firstname">
+          First Name
+        </FormLabel>
+        <FormControl
+          defaultValue={profile.firstName}
+          onChange={(e) =>
+            setProfile({ ...profile, firstName: e.target.value })
+          }
+          placeholder="First Name"
+          id="wd-firstname"
+        />
 
-      <FormLabel className="mt-2" htmlFor="wd-lastname">
-        Last Name
-      </FormLabel>
+        <FormLabel className="mt-2" htmlFor="wd-lastname">
+          Last Name
+        </FormLabel>
 
-      <FormControl
-        defaultValue="Wonderland"
-        placeholder="Last Name"
-        id="wd-lastname"
-      />
+        <FormControl
+          defaultValue={profile.lastName}
+          onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
+          placeholder="Last Name"
+          id="wd-lastname"
+        />
 
-      <FormLabel className="mt-2" htmlFor="wd-dob">
-        Date of Birth
-      </FormLabel>
-      <FormControl defaultValue="2000-01-01" type="date" id="wd-dob" />
+        <FormLabel className="mt-2" htmlFor="wd-dob">
+          Date of Birth
+        </FormLabel>
+        <FormControl
+          defaultValue={profile.dob}
+          onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
+          type="date"
+          id="wd-dob"
+        />
 
-      <FormLabel className="mt-2" htmlFor="wd-email">
-        Email
-      </FormLabel>
-      <FormControl defaultValue="alice@wonderland" type="email" id="wd-email" />
+        <FormLabel className="mt-2" htmlFor="wd-email">
+          Email
+        </FormLabel>
+        <FormControl
+          defaultValue={profile.email}
+          onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+          type="email"
+          id="wd-email"
+        />
 
-      <FormLabel className="mt-2" htmlFor="wd-role">
-        Role
-      </FormLabel>
-      <FormSelect defaultValue="FACULTY" id="wd-role">
-        <option value="USER">User</option> <option value="ADMIN">Admin</option>
-        <option value="FACULTY">Faculty</option>
-        <option value="STUDENT">Student</option>
-      </FormSelect>
+        <FormLabel className="mt-2" htmlFor="wd-role">
+          Role
+        </FormLabel>
+        <FormSelect
+          defaultValue="FACULTY"
+          id="wd-role"
+          onChange={(e) => setProfile({ ...profile, role: e.target.value })}
+        >
+          <option value="USER">User</option>{" "}
+          <option value="ADMIN">Admin</option>
+          <option value="FACULTY">Faculty</option>
+          <option value="STUDENT">Student</option>
+        </FormSelect>
 
-      <Button variant="danger" className="mt-3 w-100" href="Signin">
-        {" "}
-        Sign out{" "}
-      </Button>
+        <Button
+          onClick={signout}
+          className="w-100 mb-2 mt-4"
+          id="wd-signout-btn"
+        >
+          Sign out
+        </Button>
+      </div>
     </div>
   );
 }

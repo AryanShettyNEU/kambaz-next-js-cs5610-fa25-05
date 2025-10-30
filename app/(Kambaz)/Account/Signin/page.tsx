@@ -1,6 +1,25 @@
+"use client";
 import Link from "next/link";
-import { Button, FormControl, FormLabel } from "react-bootstrap";
+import { redirect } from "next/dist/client/components/navigation";
+import { setCurrentUser } from "../reducer";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import * as db from "../../Database";
+import { FormControl, Button, FormLabel } from "react-bootstrap";
+
 export default function Signin() {
+  const [credentials, setCredentials] = useState<any>({});
+  const dispatch = useDispatch();
+  const signin = () => {
+    const user = db.users.find(
+      (u: any) =>
+        u.username === credentials.username &&
+        u.password === credentials.password
+    );
+    if (!user) return;
+    dispatch(setCurrentUser(user));
+    redirect("/Dashboard");
+  };
   return (
     <div
       id="wd-signin-screen"
@@ -14,7 +33,10 @@ export default function Signin() {
         placeholder="username"
         id="wd-signin-username"
         className="wd-username"
-        defaultValue={"abcd"}
+        defaultValue={credentials.username}
+        onChange={(e) =>
+          setCredentials({ ...credentials, username: e.target.value })
+        }
       />
 
       <FormLabel htmlFor="wd-signin-password" className="mt-3">
@@ -25,10 +47,13 @@ export default function Signin() {
         placeholder="password"
         type="password"
         className="wd-password"
-        defaultValue={"12345678"}
+        defaultValue={credentials.password}
+        onChange={(e) =>
+          setCredentials({ ...credentials, password: e.target.value })
+        }
       />
 
-      <Button href="/Dashboard" id="wd-signin-btn" className="w-100 my-3">
+      <Button onClick={signin} id="wd-signin-btn" className="w-100 my-3">
         Sign in
       </Button>
       <br />

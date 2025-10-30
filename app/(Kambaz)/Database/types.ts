@@ -12,3 +12,19 @@ interface ILesson {
     course: string;
     lessons?: ILesson[]; 
   }
+
+  export interface IAssignmentData{
+    title: string;
+    course: string;
+    availableDate: string;
+    untilDate:string
+    dueDate: string;      
+    points: number;
+    description: string;
+  }
+
+  export interface IAssignment extends IAssignmentData {
+    _id: string;
+    modules: string;
+ 
+  }

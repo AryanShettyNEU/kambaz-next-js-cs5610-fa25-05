@@ -12,6 +12,8 @@ interface AssignmentListItemProps {
   points: string | number;
   aid: string;
   cid: string;
+  onDeleteAssignment: (id: string) => void;
+  onUpdateAssignment: (id: string) => void;
 }
 
 const AssignmentListItem: React.FC<AssignmentListItemProps> = ({
@@ -22,14 +24,19 @@ const AssignmentListItem: React.FC<AssignmentListItemProps> = ({
   points,
   aid,
   cid,
+  onDeleteAssignment,
+  onUpdateAssignment,
 }) => {
   return (
     <ListGroupItem className="wd-assignment p-3 ps-1 d-flex align-items-center">
       <div className="d-flex flex-row">
         <BsGripVertical className="me-3 fs-3 text-secondary" />
-        <Link href={`/Courses/${cid}/Assignments/${aid}`}>
-          <BsPencilSquare className="me-3 mt-1 fs-5 text-success" />
-        </Link>
+        <BsPencilSquare
+          className="me-3 mt-1 fs-5 text-success"
+          onClick={() => {
+            onUpdateAssignment(aid);
+          }}
+        />
       </div>
 
       <div className="flex-grow-1 d-flex align-items-start">
@@ -44,14 +51,18 @@ const AssignmentListItem: React.FC<AssignmentListItemProps> = ({
           <p className="mb-0 text-muted small">
             <span className="text-danger">{modules}</span> |&nbsp;
             <span className="fw-bold">Not available until </span>
-            {new Date(availableDate).toLocaleString()} |&nbsp;
+            {new Date(availableDate).toUTCString()} |&nbsp;
             <span className="fw-bold">Due </span>
-            {new Date(dueDate).toLocaleString()} | {points} pts
+            {new Date(dueDate).toUTCString()} | {points} pts
           </p>
         </div>
       </div>
 
-      <LessonControlButtons />
+      <LessonControlButtons
+        onDeleteAssignment={() => {
+          onDeleteAssignment(aid);
+        }}
+      />
     </ListGroupItem>
   );
 };

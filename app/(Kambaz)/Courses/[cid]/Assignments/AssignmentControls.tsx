@@ -1,5 +1,4 @@
-import { BsPlus, BsPlusLg } from "react-icons/bs";
-import { FaCheckCircle, FaCircle } from "react-icons/fa";
+import { BsPlusLg } from "react-icons/bs";
 import { IoEllipsisVertical } from "react-icons/io5";
 
 export default function AssignmentControlButtons() {
