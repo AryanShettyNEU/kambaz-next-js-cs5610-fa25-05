@@ -17,15 +17,15 @@ import { useSelector, useDispatch } from "react-redux";
 import "./index.css";
 import { redirect, useParams } from "next/navigation";
 import { IAssignment } from "@/app/(Kambaz)/Database/types";
-import { deleteAssignment } from "./reducer";
+import { deleteAssignment, setAssignments } from "./reducer";
+import { useEffect } from "react";
+import * as client from "../../client";
 
 export default function Assignments() {
   const { cid } = useParams();
 
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-  const currentAssignments: IAssignment[] = assignments.filter(
-    (assignment: IAssignment) => assignment.course === cid
-  );
+
   const dispatch = useDispatch();
 
   const onDeleteAssignment = (id: string) => {
@@ -35,6 +35,21 @@ export default function Assignments() {
   const onUpdateAssignment = (id: string) => {
     redirect(`./Assignments/${id}`);
   };
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  const onRemoveAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(
+      setAssignments(assignments.filter((a: any) => a._id !== assignmentId))
+    );
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
   return (
     <div id="wd-assignments">
       <div className="d-flex flex-row justify-content-between mb-4">
@@ -92,13 +107,13 @@ export default function Assignments() {
             </span>
             <AssignmentControlButtons />
           </div>
-          {currentAssignments.map(({ _id, course, ...rest }) => (
+          {(assignments as IAssignment[]).map(({ _id, course, ...rest }) => (
             <AssignmentItem
               key={_id}
               aid={_id}
               cid={course}
               {...rest}
-              onDeleteAssignment={onDeleteAssignment}
+              onDeleteAssignment={onRemoveAssignment}
               onUpdateAssignment={onUpdateAssignment}
             />
           ))}

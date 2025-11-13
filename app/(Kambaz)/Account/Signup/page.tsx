@@ -1,6 +1,21 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
 import { Button, FormControl, FormLabel } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import * as client from "../client";
+import { setCurrentUser } from "../reducer";
+import { redirect } from "next/navigation";
+
 export default function Signup() {
+  const [user, setUser] = useState<any>({});
+  const dispatch = useDispatch();
+  const signup = async () => {
+    const currentUser = await client.signup(user);
+    dispatch(setCurrentUser(currentUser));
+    redirect("/Account/Profile");
+  };
+
   return (
     <div
       id="wd-signup-screen"
@@ -12,9 +27,10 @@ export default function Signup() {
       <FormLabel htmlFor="wd-signup-username">Username</FormLabel>
       <FormControl
         id="wd-signup-username"
+        value={user.username}
+        onChange={(e) => setUser({ ...user, username: e.target.value })}
+        className="wd-username b-2"
         placeholder="username"
-        className="wd-username"
-        defaultValue={"abcd"}
       />
 
       <FormLabel htmlFor="wd-signup-password" className="mt-3">
@@ -22,10 +38,11 @@ export default function Signup() {
       </FormLabel>
       <FormControl
         id="wd-signup-password"
+        value={user.password}
+        onChange={(e) => setUser({ ...user, password: e.target.value })}
+        className="wd-password mb-2"
         placeholder="password"
         type="password"
-        className="wd-password"
-        defaultValue={"12345678"}
       />
 
       <FormLabel htmlFor="wd-re-enter-password" className="mt-3">
@@ -36,10 +53,9 @@ export default function Signup() {
         placeholder="verify password"
         type="password"
         className="wd-password-verify"
-        defaultValue={"12345678"}
       />
 
-      <Button className="w-100 my-3" href="Profile">
+      <Button className="w-100 my-3" onClick={signup}>
         Sign up{" "}
       </Button>
       <br />

@@ -1,16 +1,20 @@
-import { assignments } from "@/app/(Kambaz)/Database";
 import { IAssignment, IAssignmentData } from "@/app/(Kambaz)/Database/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
-const initialState = {
-  assignments,
+const initialState: {
+  assignments: IAssignment[];
+} = {
+  assignments: [],
 };
 
 const assignmentsSlice = createSlice({
   name: "assignments",
   initialState,
   reducers: {
+    setAssignments: (state, action) => {
+      state.assignments = action.payload;
+    },
     addAssignment: (
       state,
       { payload: assignment }: { payload: IAssignmentData }
@@ -50,5 +54,6 @@ export const {
   deleteAssignment,
   updateAssignment,
   editAssignment,
+  setAssignments,
 } = assignmentsSlice.actions;
 export default assignmentsSlice.reducer;

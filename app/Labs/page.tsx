@@ -24,6 +24,11 @@ export default function Labs() {
             Lab 4: State
           </Link>
         </li>
+        <li>
+          <Link href="/Labs/Lab5" id="wd-lab5-link">
+            Lab 5: RESTFUL APIs
+          </Link>
+        </li>
       </ul>
     </div>
   );

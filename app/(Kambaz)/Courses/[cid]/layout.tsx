@@ -10,7 +10,7 @@ export default function CoursesLayout({
 }: Readonly<{ children: ReactNode }>) {
   const { cid } = useParams();
   const { courses } = useSelector((state: any) => state.coursesReducer);
-  const course = courses.find((course: any) => course._id === cid);
+  const course = courses.find((course: any) => course?._id === cid);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
 
@@ -21,7 +21,7 @@ export default function CoursesLayout({
       !enrollments.some(
         (enrollment: any) =>
           enrollment.user === currentUser?._id &&
-          enrollment.course === course._id
+          enrollment.course === course?._id
       )
     ) {
       redirect("/Dashboard");

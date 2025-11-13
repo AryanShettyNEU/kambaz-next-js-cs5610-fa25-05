@@ -1,21 +1,12 @@
 "use client";
 import { redirect, useParams } from "next/navigation";
-import {
-  Button,
-  FormCheck,
-  FormControl,
-  FormLabel,
-  FormSelect,
-  Row,
-  Col,
-} from "react-bootstrap";
-import { assignments } from "@/app/(Kambaz)/Database";
-import Link from "next/link";
+
 import AssignmentEditor from "../AssignmentsEditor";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IAssignment } from "@/app/(Kambaz)/Database/types";
-import { updateAssignment } from "../reducer";
+import { setAssignments } from "../reducer";
+import * as client from "../../../client";
 
 export default function Edit() {
   const { aid, cid } = useParams();
@@ -32,8 +23,14 @@ export default function Edit() {
     redirect("../Assignments");
   };
 
-  const onSave = (e: SyntheticEvent) => {
-    dispatch(updateAssignment(assignment));
+  const onSave = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!cid) return;
+    await client.updateAssignment(assignment);
+    const newAssignments = assignments.map((a: any) =>
+      a._id === assignment._id ? assignment : a
+    );
+    dispatch(setAssignments(newAssignments));
     redirectBack(e);
   };
 

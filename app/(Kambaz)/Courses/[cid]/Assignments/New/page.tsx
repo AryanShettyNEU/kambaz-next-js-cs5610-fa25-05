@@ -3,12 +3,13 @@ import { IAssignmentData } from "@/app/(Kambaz)/Database/types";
 import { redirect, useParams } from "next/navigation";
 import React, { SyntheticEvent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addAssignment } from "../reducer";
+import { addAssignment, setAssignments } from "../reducer";
 import AssignmentEditor from "../AssignmentsEditor";
-
+import * as client from "../../../client";
 const New = () => {
   const dispatch = useDispatch();
   const { cid } = useParams();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
   const [assignment, setAssignment] = useState<IAssignmentData>(() => {
     const today = new Date();
@@ -30,11 +31,17 @@ const New = () => {
     redirect("../Assignments");
   };
 
-  const onSave = (e: SyntheticEvent) => {
-    dispatch(addAssignment(assignment));
+  const onSave = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!cid) return;
+    const newAssignment = await client.createAssignmentForCourse(
+      cid as string,
+      assignment
+    );
+
+    dispatch(setAssignments([...assignments, newAssignment]));
     redirectBack(e);
   };
-
   return (
     <AssignmentEditor
       assignment={assignment}
