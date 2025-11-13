@@ -114,6 +114,7 @@ export default function Dashboard() {
   const onAddNewCourse = async () => {
     const newCourse = await client.createCourse(course);
     dispatch(setCourses([...courses, newCourse]));
+    fetchAllEnrollments();
   };
 
   useEffect(() => {
